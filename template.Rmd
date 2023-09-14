@@ -1,0 +1,80 @@
+---
+title: "Simple document"
+author: "Hyun Jin Jung"
+date: "2023-9-12"
+output:
+  github_document
+---
+
+```{r, echo = FALSE, message = FALSE}
+library(tidyverse)
+```
+
+I'm an R Markdown document! 
+
+# Section 1: First code chunk
+
+Here's a **code chunk** that samples from 
+a _normal distribution_:
+
+```{r}
+samp = rnorm(100)
+length(samp)
+```
+
+# Section 2: Make a plot
+
+This code is borrowed from last lecture; it creates a dataframe for plotting.
+
+```{r}
+set.seed(1)
+
+plot_df = 
+  tibble(
+  x = rnorm(1000, sd = .5),
+  y = 1 + 2 * x + rnorm(1000)
+)
+```
+
+Next up is a histogram of the 'x' variable in 'plot_df'
+
+```{r}
+ggplot(plot_df, aes(x = x)) + geom_histogram()
+```
+
+Lastly, I'll do a scatterplot.
+
+```{r}
+ggplot(plot_df, aes(x = x, y = y)) + geom_point()
+```
+
+
+# Section 3: Learning assessment!
+
+The chunk below creates a dataframe containing a sample of size 500 from a 
+random normal variable, constructs the specified logical vector, takes the 
+absolute value of each element of that sample,and produces a histogram of 
+the absolute value. The code chunk also finds the median of the sample and
+stores it for easy in-line printing.
+
+```{r la_df}
+library(tidyverse)
+
+la_df = tibble(
+  num_samp = rnorm(500, mean = 1),
+  log_vec = num_samp > 0,
+  abs_val = abs(num_samp)
+)
+
+ggplot(la_df, aes(x = abs_val)) + geom_histogram()
+
+median_samp = median(pull(la_df, num_samp))
+```
+
+The median of the variable containing absolute values is 
+`r round(median_samp, digits = 2)`.
+
+
+
+
+
